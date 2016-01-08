@@ -1,0 +1,22 @@
+#!/bin/sh
+#This script is used to connect a WEP network and wpa_supplicant doesn't work for me.
+echo "Setting up Internet connection..."
+{	
+	#Replace your wlp3s0 with your wireless interface. Check using ip link if you don't know.
+	#Replace Roger_Dodger with your network name. Check using iw dev <your_interface> scan if you don't know.
+	#Replace 796f...with your password in hexadecimal.
+	#Use the command line echo -n "Hello" | od -A n -t x1 | sed 's/^ *//'
+        #and replace Hello with your password to convert it to hexadecimal values.
+	#Use man od if you want to learn more about this command.
+
+	iwconfig wlp3s0 essid "Roger_Dodger" key "796f75726d6f6d6973666174"
+	
+	#Fire it up
+
+	ip link set wlp3s0 up
+	dhcpcd
+
+}  &> /dev/null #Don't need to see those outputs. If only wpa_supplicant wouldn't be this nosy.
+echo "Done." #If you see this, give it a minute and ping www.google.com to see if it works.
+#Save this somewhere and open your terminal and type sudo sh netscript.sh
+#Don't go fly over to the other side of the world and smack my butt if it doesn't work for you.
